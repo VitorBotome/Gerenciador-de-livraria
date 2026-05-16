@@ -172,8 +172,6 @@ API REST desenvolvida em **C# com ASP.NET Core** para gerenciamento completo de 
 - `genre` deve ser um dos valores válidos do enum `GeneroLivroEnum`
 - `createdAt` é preenchido automaticamente na criação do livro
 - `updatedAt` é atualizado automaticamente a cada edição
-- Em caso de exclusão de um livro inexistente, atualmente é lançada uma exceção *(melhoria futura: retornar 404)*
-- *(Melhoria futura)* Evitar duplicidade de livros com mesmo título e autor
 
 ---
 
