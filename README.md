@@ -26,13 +26,13 @@ API REST desenvolvida em **C# com ASP.NET Core** para gerenciamento completo de 
 
 ## 🔗 Endpoints da API
 
-| Método   | Endpoint          | Descrição                         |
-|----------|-------------------|-----------------------------------|
-| `POST`   | `/api/book`       | Criar um novo livro               |
-| `GET`    | `/api/book`       | Listar todos os livros            |
-| `GET`    | `/api/book/{id}`  | Buscar um livro pelo ID           |
-| `PUT`    | `/api/book/{id}`  | Atualizar informações de um livro |
-| `DELETE` | `/api/book/{id}`  | Excluir um livro da livraria      |
+| Método   | Endpoint         | Descrição                         |
+|----------|------------------|-----------------------------------|
+| `POST`   | `/api/book`      | Criar um novo livro               |
+| `GET`    | `/api/book`      | Listar todos os livros            |
+| `GET`    | `/api/book/{id}` | Buscar um livro pelo ID           |
+| `PUT`    | `/api/book/{id}` | Atualizar informações de um livro |
+| `DELETE` | `/api/book/{id}` | Excluir um livro da livraria      |
 
 ---
 
@@ -64,6 +64,50 @@ API REST desenvolvida em **C# com ASP.NET Core** para gerenciamento completo de 
   "updatedAt": null
 }
 ```
+
+---
+
+### Listar todos os livros — `GET /api/book`
+
+**Response `200 OK`:**
+```json
+[
+  {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "title": "O Senhor dos Anéis",
+    "author": "J.R.R. Tolkien",
+    "genre": "Ficcao",
+    "price": 59.90,
+    "stock": 10,
+    "createdAt": "2025-01-01 10:00:00",
+    "updatedAt": null
+  }
+]
+```
+
+---
+
+### Buscar livro por ID — `GET /api/book/{id}`
+
+**Response `200 OK`:**
+```json
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "title": "O Senhor dos Anéis",
+  "author": "J.R.R. Tolkien",
+  "genre": "Ficcao",
+  "price": 59.90,
+  "stock": 10,
+  "createdAt": "2025-01-01 10:00:00",
+  "updatedAt": null
+}
+```
+
+**Response `404 Not Found`:**
+```json
+"Livro nao encontrado"
+```
+
 ---
 
 ### Atualizar livro — `PUT /api/book/{id}`
@@ -97,19 +141,28 @@ API REST desenvolvida em **C# com ASP.NET Core** para gerenciamento completo de 
 ```json
 "Livro nao encontrado"
 ```
+
 ---
+
+### Excluir livro — `DELETE /api/book/{id}`
+
+**Response `200 OK`:**
+```json
+"Livro deletado"
 ```
+
+---
 
 ### Campos obrigatórios
 
-| Campo    | Tipo      | Obrigatório | Regras de Validação                                                              |
-|----------|-----------|-------------|----------------------------------------------------------------------------------|
-| `id`     | `GUID`    | Automático  | Gerado automaticamente pelo sistema                                              |
-| `title`  | `string`  | ✅ Sim      | Entre 2 e 120 caracteres                                                         |
-| `author` | `string`  | ❌ Não      | Entre 2 e 120 caracteres                                                         |
-| `genre`  | `enum`    | ✅ Sim      | Valores válidos: `Ficcao`, `Romance`, `Misterio`, `Terror`, `Outros`             |
-| `price`  | `decimal` | ✅ Sim      | Deve ser maior ou igual a 0                                                      |
-| `stock`  | `int`     | ✅ Sim      | Deve ser maior ou igual a 0                                                      |
+| Campo    | Tipo      | Obrigatório | Regras de Validação                                                  |
+|----------|-----------|-------------|----------------------------------------------------------------------|
+| `id`     | `GUID`    | Automático  | Gerado automaticamente pelo sistema                                  |
+| `title`  | `string`  | ✅ Sim      | Entre 2 e 120 caracteres                                             |
+| `author` | `string`  | ❌ Não      | Entre 2 e 120 caracteres                                             |
+| `genre`  | `enum`    | ✅ Sim      | Valores válidos: `Ficcao`, `Romance`, `Misterio`, `Terror`, `Outros` |
+| `price`  | `decimal` | ✅ Sim      | Deve ser maior ou igual a 0                                          |
+| `stock`  | `int`     | ✅ Sim      | Deve ser maior ou igual a 0                                          |
 
 ### Regras de Negócio
 
@@ -144,9 +197,9 @@ GerenciadorDeLivraria/
 ├── Service/
 │   └── BookService.cs             # Regras de negócio
 ├── .gitignore
-├── appsettings.json               
-├── appsettings.Development.json   
-├── GerenciadorDeLivraria.http     
+├── appsettings.json
+├── appsettings.Development.json
+├── GerenciadorDeLivraria.http
 └── Program.cs                     # Ponto de entrada da aplicação
 ```
 
@@ -192,7 +245,6 @@ A API utiliza as seguintes configurações globais de serialização:
 - **Datas com formatação customizada** — `createdAt` e `updatedAt` utilizam um conversor próprio de `DateTime`
 
 ---
-
 
 ## 👨‍💻 Autor
 
