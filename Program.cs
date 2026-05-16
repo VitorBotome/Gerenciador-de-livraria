@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Options;
+using GerenciadorDeLivraria.Converters;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,13 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        // 1. Transforma o Enum em Texto (Saída) e Texto em Enum (Entrada)
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-
-        // 2. Ignora se é Maiúscula ou Minúscula ao ler o JSON enviado por você
         options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        // Formatação das datas
+        options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+        options.JsonSerializerOptions.Converters.Add(new NullableDateTimeConverter());
     });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

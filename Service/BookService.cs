@@ -1,12 +1,14 @@
 ﻿using GerenciadorDeLivraria.DTOs;
 using GerenciadorDeLivraria.Models;
 using GerenciadorDeLivraria.Repositories;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciadorDeLivraria.Service;
 
 public class BookService
 {
-    public void CreateBook(CreateBookDto dto)
+    public Book CreateBook(CreateBookDto dto)
     {
         if (dto.Title == dto.Author)
         {
@@ -18,8 +20,13 @@ public class BookService
             Id = Guid.NewGuid(),
             Title = dto.Title,
             Author  = dto.Author,
+            Genre = dto.Genre,
+            Price = dto.Price,
+            Stock = dto.Stock,
+            CreatedAt = DateTime.UtcNow,
         };
         BookRepository.Books.Add(book);
+        return book;
     }
 
     public List<Book> GetAllBooks()
@@ -32,7 +39,7 @@ public class BookService
         return BookRepository.Books.FirstOrDefault(b => b.Id == id);
     }
 
-    public void DeleteBook(Guid id)
+    public Book DeleteBook(Guid id)
     {
         var book = BookRepository.Books.FirstOrDefault(b => b.Id == id);
 
@@ -42,6 +49,23 @@ public class BookService
         }
         
         BookRepository.Books.Remove(book);
+        return book;
         
+    }
+
+    public Book UpdateBook(Guid id, UpdateBookDto dto)
+    {
+        var book = BookRepository.Books.FirstOrDefault(b => b.Id == id);
+        if (book == null)
+            return null;
+
+        book.Title = dto.Title;
+        book.Author = dto.Author;
+        book.Genre = dto.Genre;
+        book.Price = dto.Price;
+        book.Stock = dto.Stock;
+        book.UpdatedAt = DateTime.UtcNow;
+
+        return book; ;
     }
 }
